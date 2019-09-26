@@ -38,6 +38,9 @@ print(expected.return.with.probability)
 
 # Finally, assign the summed value from last slide as expected.return and annualize the returns.
 
-daily.expected.return <- ((1+daily.return)^(1/365)-1)
+daily.expected.return <- ((1+daily.return)^(1/25471)-1)
+
+# The day From  Jan 1 1950 to Sep 26 2019 is 25471
 
 print(daily.expected.return)
+
