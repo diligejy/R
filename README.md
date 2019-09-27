@@ -7,7 +7,14 @@
 ## R_finance
 - R_Quant 
   * R을 이용한 퀀트 투자 포트폴리오(https://hyunyulhenry.github.io/quant_cookbook/)
+
 - Introduction_Quantitative_Investing
   * KMOOC Introduction to Quantitative Investing(Youngju Nielson)
   * In this lecture, 1990 Jan to 2015 Sep S&5P 500 Mohtly Data has been used. 
   * However I use 1950 Jan to 2019 Sep Daily Data.
+
+## R_statistics
+
+- Introduction_Statistics
+  * KMOOC Introduction to Statistics using R
+  
