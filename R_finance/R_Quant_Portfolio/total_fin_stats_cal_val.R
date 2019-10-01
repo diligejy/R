@@ -1,21 +1,19 @@
-
 library(stringr)
 library(httr)
 library(rvest)
 library(stringr)
 library(readr)
 
-
 KOR_ticker = read.csv('C:/Users/jinyoung/Desktop/R_finance/R_Quant_Portfolio/data/KOR_ticker.csv', row.names = 1)
 KOR_ticker$'종목코드' =
-  str_pad(KOR_ticker$'종목코드', 6, side = c('left'), pad = '0')
+  str_pad(KOR_ticker$'종목코드', 6,side = c('left'), pad = '0')
 
 ifelse(dir.exists('C:/Users/jinyoung/Desktop/R_finance/R_Quant_Portfolio/data/KOR_fs'), FALSE,
        dir.create('C:/Users/jinyoung/Desktop/R_finance/R_Quant_Portfolio/data/KOR_fs'))
 ifelse(dir.exists('C:/Users/jinyoung/Desktop/R_finance/R_Quant_Portfolio/data/KOR_value'), FALSE,
        dir.create('C:/Users/jinyoung/Desktop/R_finance/R_Quant_Portfolio/data/KOR_value'))
 
-for (i in 1 : nrow(KOR_ticker)){
+for(i in 1 : nrow(KOR_ticker) ) {
   
   data_fs = c()
   data_value = c()
@@ -28,9 +26,11 @@ for (i in 1 : nrow(KOR_ticker)){
     
     # url 생성
     url = paste0(
-      'http://comp.fnguide.com/SV02/ASP',
-      'SVD_Finance.asp?pGB=1&gicode=A', name
-    )
+      'http://comp.fnguide.com/SVO2/ASP/'
+      ,'SVD_Finance.asp?pGB=1&gicode=A',
+      name)
+    
+    # 이 후 과정은 위와 동일함
     
     # 데이터 다운로드 후 테이블 추출
     data = GET(url) %>%
@@ -105,14 +105,15 @@ for (i in 1 : nrow(KOR_ticker)){
     data_value = price / (value_index * 100000000/ share)
     names(data_value) = c('PER', 'PBR', 'PCR', 'PSR')
     data_value[data_value < 0] = NA
+    
   }, error = function(e) {
     
     # 오류 발생시 해당 종목명을 출력하고 다음 루프로 이동
     data_fs <<- NA
     data_value <<- NA
     warning(paste0("Error in Ticker: ", name))
-    
   })
+  
   # 다운로드 받은 파일을 생성한 각각의 폴더 내 csv 파일로 저장
   
   # 재무제표 저장
@@ -124,5 +125,4 @@ for (i in 1 : nrow(KOR_ticker)){
   
   # 2초간 타임슬립 적용
   Sys.sleep(2)
-
 }
